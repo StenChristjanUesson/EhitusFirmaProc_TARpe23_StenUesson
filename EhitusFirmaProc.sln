@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EhitusFirmaProc", "EhitusFirmaProc.csproj", "{75C4A467-B773-4466-A2FF-2AE239262ACC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{75C4A467-B773-4466-A2FF-2AE239262ACC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75C4A467-B773-4466-A2FF-2AE239262ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75C4A467-B773-4466-A2FF-2AE239262ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75C4A467-B773-4466-A2FF-2AE239262ACC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14949AC9-FD06-4ACD-B1C5-5985218E94AE}
+	EndGlobalSection
+EndGlobal

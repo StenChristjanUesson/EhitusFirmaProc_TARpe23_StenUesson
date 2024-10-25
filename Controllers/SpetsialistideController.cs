@@ -15,30 +15,51 @@ namespace EhitusfirmaProc.Controllers
             _context = context;
         }
 
-        public async Task<List<Spetsialist>> GetSpetsialistid()
+        public async Task<ActionResult<IEnumerable<Spetsialist>>> GetAll()
         {
             return await _context.Spetsialistid.ToListAsync();
         }
 
-        public async Task<Spetsialist> GetSpetsialist(Guid id)
+        public async Task<ActionResult<Spetsialist>> GetById(Guid id)
         {
-            return await _context.Spetsialistid.FindAsync(id);
-        }
-
-        public async Task<Spetsialist> LisaSpetsialist(Spetsialist spetsialist)
-        {
-            _context.Spetsialistid.Add(spetsialist);
-            await _context.SaveChangesAsync();
+            var spetsialist = await _context.Spetsialistid.FindAsync(id);
+            if (spetsialist == null)
+            {
+                return NotFound();
+            }
             return spetsialist;
         }
 
-        public async Task UuendaSpetsialist(Guid id, Spetsialist spetsialist)
+        public async Task<ActionResult<Spetsialist>> Create(Spetsialist spetsialist)
         {
-            // Ensure the types match
-            if (id != spetsialist.TöötajaID) return;
+            _context.Spetsialistid.Add(spetsialist);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetById), new { id = spetsialist.SpetsialistID }, spetsialist);
+        }
+
+        public async Task<IActionResult> Update(Guid id, Spetsialist spetsialist)
+        {
+            if (id != spetsialist.SpetsialistID)
+            {
+                return BadRequest();
+            }
 
             _context.Entry(spetsialist).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var spetsialist = await _context.Spetsialistid.FindAsync(id);
+            if (spetsialist == null)
+            {
+                return NotFound();
+            }
+
+            _context.Spetsialistid.Remove(spetsialist);
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
     }
 }

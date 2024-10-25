@@ -9,36 +9,57 @@ namespace EhitusfirmaProc.Controllers
     public class ProjektideController : Controller
     {
         private readonly StoredEhitusfirmaProcDbContext _context;
-
         public ProjektideController(StoredEhitusfirmaProcDbContext context)
         {
             _context = context;
         }
 
-        public async Task<List<Projekt>> GetProjektid()
+
+        public async Task<ActionResult<IEnumerable<Projekt>>> GetAll()
         {
-            return await _context.Projektid.Include(p => p.Töötajad).ToListAsync();
+            return await _context.Projektid.ToListAsync();
         }
 
-        public async Task<Projekt> GetProjekt(Guid id)
+        public async Task<ActionResult<Projekt>> GetById(Guid id)
         {
-            return await _context.Projektid.Include(p => p.Töötajad).FirstOrDefaultAsync(p => p.ProjektID == id);
-        }
-
-        public async Task<Projekt> LisaProjekt(Projekt projekt)
-        {
-            _context.Projektid.Add(projekt);
-            await _context.SaveChangesAsync();
+            var projekt = await _context.Projektid.FindAsync(id);
+            if (projekt == null)
+            {
+                return NotFound();
+            }
             return projekt;
         }
 
-        public async Task UuendaProjekt(Guid id, Projekt projekt)
+        public async Task<ActionResult<Projekt>> Create(Projekt projekt)
         {
-            // Ensure the types match
-            if (id != projekt.ProjektID) return;
+            _context.Projektid.Add(projekt);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetById), new { id = projekt.ProjektID }, projekt);
+        }
+
+        public async Task<IActionResult> Update(Guid id, Projekt projekt)
+        {
+            if (id != projekt.ProjektID)
+            {
+                return BadRequest();
+            }
 
             _context.Entry(projekt).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var projekt = await _context.Projektid.FindAsync(id);
+            if (projekt == null)
+            {
+                return NotFound();
+            }
+
+            _context.Projektid.Remove(projekt);
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
     }
 }
